@@ -1,15 +1,10 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { Customer } from "./entity/Customer";
-
 import express from 'express';
-import graphqlHTTP from 'express-graphql';
+
 
 const app = express();
-
-app.use('/graphql', graphqlHTTP({
-    
-}));
 
 
 createConnection()
