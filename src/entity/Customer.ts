@@ -3,27 +3,27 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity()
 export class Customer {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column()
+    @Column({ name: "first_name" })
     firstName: string;
 
-    // @Column()
-    // lastName: string;
+    @Column({ name: "last_name" })
+    lastName: string;
 
-    // @Column()
-    // address: string;
+    @Column({ name: "address" })
+    address: string;
 
-    // @Column()
-    // addressDesc: string
+    @Column({ name: "address_description", nullable: true })
+    addressDesc: string
 
-    // @Column()
-    // phone: number
+    @Column({ name: "phone", nullable: true })
+    phone: number
 
-    // @Column()
-    // receiver: string
+    @Column({ name: "receiver", nullable: true })
+    receiver: string
 
-    // @Column()
-    // note: string
+    @Column({ name: "note", nullable: true })
+    note: string
 };
