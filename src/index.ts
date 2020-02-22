@@ -1,25 +1,41 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
-import { Customer } from "./entity/Customer";
-import express from 'express';
+import { Request, Response } from "express";
+import * as express from 'express';
+import * as bodyParser from "body-parser";
 
+//Modules
+// import customer from './controllers/customer';
 
-const app = express();
+//Routes
+import { AppRoutes } from './routes';
 
-
+// Database connection
 createConnection()
     .then(async (connection) => {
+        console.log("Connect to DB success")
 
-        // console.log("Inserting a new user into the database...");
-        // const user = new Customer();
-        // user.firstName = "Timber";
-        // await connection.manager.save(user);
-        // console.log("Saved a new user with id: " + user.id);
+        const app = express();
+        //app config
+        app.use(express.urlencoded({ extended: false }));
+        app.use(bodyParser.json());
+        app.use(express.json());
 
-        // console.log("Loading users from the database...");
-        // const users = await connection.manager.find(Customer);
-        // console.log("Loaded users: ", users);
 
-        // console.log("Here you can setup and run express/koa/any other framework.");
+        // app.use('/api/customer', customer)
+        // register all application routes
+        AppRoutes.forEach(route => {
+            app[route.method](route.path, (req: Request, res: Response, next: Function) => {
+                route.action(req, res)
+                    .then(() => next)
+                    .catch(err => next(err));
+            });
+        });
 
-    }).catch(error => console.log(error));
+        app.listen(8000, () => console.log('listen to port 8000'))
+
+    })
+    .catch(error => console.log("ERROR: " + error));
+
+
+
