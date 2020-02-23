@@ -1,9 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Customer {
 
-    @PrimaryGeneratedColumn("uuid")
+    @PrimaryGeneratedColumn()
     id: string;
 
     @Column({ name: "first_name" })
@@ -26,4 +26,11 @@ export class Customer {
 
     @Column({ name: "note", nullable: true })
     note: string
+
+    @CreateDateColumn({ name: "create_date" })
+    createDate: string
+
+    @UpdateDateColumn({ name: "update_date" })
+    updateDate: string
+
 };
